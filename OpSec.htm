@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manifesto OpSec: Fortaleza Digital</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #000;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        /* Cabeçalho Fixo */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(#000, #001a00);
+            border-bottom: 2px solid #00ff00;
+            padding: 20px;
+            z-index: 1000;
+            box-shadow: 0 0 10px #00ff00;
+        }
+        header h1 {
+            font-size: 2.5em;
+            text-align: center;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+            animation: glitch 2s infinite;
+        }
+        header p {
+            text-align: center;
+            color: #00ccff;
+            margin-top: 10px;
+            font-size: 1em;
+        }
+        header .highlight {
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+        /* Menu Lateral */
+        .sidebar {
+            width: 250px;
+            background: #111;
+            border-right: 2px solid #00ff00;
+            padding: 20px;
+            position: fixed;
+            top: 160px;
+            height: calc(100% - 160px);
+            overflow-y: auto;
+            box-shadow: 0 0 10px #00ff00;
+        }
+        .sidebar h2 {
+            font-size: 1.2em;
+            color: #00ccff;
+            text-shadow: 0 0 5px #00ccff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .sidebar ul {
+            list-style: none;
+        }
+        .sidebar li {
+            margin: 10px 0;
+        }
+        .sidebar a {
+            color: #00ff00;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            display: block;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .sidebar a:hover {
+            background: #00ff00;
+            color: #000;
+            text-shadow: none;
+        }
+        /* Frame Principal */
+        .content {
+            margin-left: 270px;
+            margin-top: 160px;
+            padding: 20px;
+            width: calc(100% - 270px);
+            overflow-y: auto;
+            height: calc(100vh - 160px);
+        }
+        .content h2 {
+            font-size: 1.5em;
+            color: #00ccff;
+            text-shadow: 0 0 5px #00ccff;
+            margin: 20px 0 10px;
+            border-bottom: 1px solid #00ff00;
+            padding-bottom: 5px;
+        }
+        .content p, .content ul, .content ol, .content dl {
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+        .content ul, .content ol {
+            padding-left: 20px;
+        }
+        .content li {
+            margin: 5px 0;
+        }
+        .content dl {
+            border: 1px solid #00ff00;
+            padding: 10px;
+            background: #111;
+            border-radius: 5px;
+            box-shadow: 0 0 10px #00ff00;
+        }
+        .content dt {
+            color: #00ccff;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .content dd {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        .content .highlight {
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+        .content .jaba {
+            font-style: italic;
+            color: #00ccff;
+        }
+        .content code {
+            background: #1a1a1a;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .content a {
+            color: #00ff00;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .content a:hover {
+            color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+            text-decoration: underline;
+        }
+        .donation {
+            border: 1px solid #00ff00;
+            padding: 10px;
+            background: #111;
+            border-radius: 5px;
+            box-shadow: 0 0 10px #00ff00;
+            margin-top: 20px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #00ccff;
+            text-shadow: 0 0 5px #00ccff;
+        }
+        /* Animações */
+        @keyframes glitch {
+            0% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
+            2% { text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff; transform: translateX(2px); }
+            4% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; transform: translateX(-2px); }
+            6% { text-shadow: 0 0 10px #00ccff, 0 0 20px #00ccff; }
+            8% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; transform: translateX(0); }
+        }
+        /* Responsividade */
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.8em; }
+            header p { font-size: 0.9em; }
+            header { padding: 10px; height: 120px; }
+            .sidebar {
+                width: 200px;
+                transform: translateX(-200px);
+                transition: transform 0.3s;
+                top: 120px;
+                height: calc(100% - 120px);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .content {
+                margin-left: 0;
+                margin-top: 120px;
+                width: 100%;
+                height: calc(100vh - 120px);
+            }
+            .toggle-btn {
+                display: block;
+                position: fixed;
+                top: 10px;
+                left: 10px;
+                background: #00ff00;
+                color: #000;
+                border: none;
+                padding: 10px;
+                cursor: pointer;
+                z-index: 1001;
+            }
+            .content h2 { font-size: 1.2em; }
+            .content dt { font-size: 0.9em; }
+            .content dd { font-size: 0.8em; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho Fixo -->
+    <header>
+        <h1>Manifesto OpSec: Fortaleza Digital</h1>
+        <p>
+            Este manifesto é um protocolo de segurança de nível militar, otimizado para usuários domésticos com recursos limitados. Ele combina criptografia inquebrável, segmentação rígida e ferramentas de elite para criar um perímetro digital impenetrável. Vamos transformar seu setup em uma fortaleza, com precisão cirúrgica e paranoia calculada. <span class="highlight">Shields On!</span>
+        </p>
+    </header>
+
+    <!-- Menu Lateral -->
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar" id="sidebar">
+        <h2>Sumário</h2>
+        <ul>
+            <li><a href="#section1">1. Descarte Seguro de Mídias</a></li>
+            <li><a href="#section2">2. Arsenal de Hardware</a></li>
+            <li><a href="#section3">3. Sistema Online: Windows 11</a></li>
+            <li><a href="#section4">4. Sistema Offline: Tails + exFAT</a></li>
+            <li><a href="#section5">5. Criptografia: Veracrypt</a></li>
+            <li><a href="#section6">6. Gerenciamento de Senhas</a></li>
+            <li><a href="#section7">7. Troca de Senhas e 2FA</a></li>
+            <li><a href="#section8">8. Antivírus: Escudo Multicamadas</a></li>
+            <li><a href="#section9">9. Backup de Chaves</a></li>
+            <li><a href="#section10">10. Pendrive Multiboot: Ventoy</a></li>
+            <li><a href="#section11">11. Backups e Restauração</a></li>
+            <li><a href="#section12">12. Segurança Física</a></li>
+            <li><a href="#section13">13. Monitoramento e Auditoria</a></li>
+            <li><a href="#section14">14. Treinamento OpSec</a></li>
+            <li><a href="#section15">15. Ferramentas de Elite</a></li>
+            <li><a href="#glossary">16. Glossário</a></li>
+            <li><a href="#links">Links</a></li>
+            <li><a href="#conclusion">Conclusão</a></li>
+        </ul>
+    </div>
+
+    <!-- Frame Principal -->
+    <div class="content">
+        <h2 id="section0">Nota do autor</h2>
+        <ul>
+             <li>Após três ataques que abalaram minha segurança digital, criei este Manifesto OpSec: Fortaleza Digital. Em 2009, um ransomware destruiu 4TB de dados criptografados, ensinando-me o valor de backups. Em 2017, um hacker tomou controle remoto do meu PC, expondo falhas críticas. Em 2025, minhas contas do Instagram, Netflix e Spotify foram invadidas, com senhas alteradas. Essas lições, forjadas na paranoia, inspiraram este guia: um protocolo de sobrevivência com ferramentas de elite, criptografia robusta e mentalidade de confiança zero. Este é o seu escudo contra os perigos do mundo digital de hoje. Fortify now!</li>
+        </ul>
+        <h2 id="section1">1. Descarte Seguro de Mídias</h2>
+        <p><span class="highlight">Missão:</span> Neutralizar vetores de comprometimento.</p>
+        <p><span class="highlight">Protocolo:</span></p>
+        <ul>
+            <li>Descarte todas as mídias digitais, exceto backups criptografados.</li>
+            <li>HDs: desmonte ou trituração física.</li>
+            <li>SSDs NVMe: sobrescrição com <code>nvme-cli</code> (ex.: <code>nvme sanitize</code>).</li>
+            <li>Backups: criptografados (AES-256), armazenados em pendrive dedicado.</li>
+            <li>Descarte anônimo: evitar lixeiras públicas, usar pontos de reciclagem distantes.</li>
+            <li>Log: registrar datas/métodos em papel, guardado em gaveta trancada.</li>
+        </ul>
+
+        <h2 id="section2">2. Arsenal de Hardware</h2>
+        <p><span class="highlight">Aquisição:</span></p>
+        <ul>
+            <li>2 SSDs NVMe (ex.: WD Black SN770):
+                <ul>
+                    <li>SSD1: Sistema Online (Windows 11 Home).</li>
+                    <li>SSD2: Sistema Offline (Tails + exFAT).</li>
+                </ul>
+            </li>
+            <li>Pendrive acessório (ex.: SanDisk Ultra, 16GB) para transferências.</li>
+            <li>Pendrive multiboot (ex.: SanDisk Extreme Pro, 32GB) com Ventoy.</li>
+        </ul>
+        <p><span class="highlight">Integridade:</span></p>
+        <ul>
+            <li>Comprar de varejistas confiáveis, verificar embalagem.</li>
+            <li>Atualizar firmware via ferramentas do fabricante.</li>
+            <li>Etiquetar dispositivos: “Online”, “Offline”, “Ventoy”.</li>
+        </ul>
+
+        <h2 id="section3">3. Sistema Online: Windows 11 Home Blindado</h2>
+        <p><span class="highlight">Missão:</span> Sistema seguro para uso diário (casa, escritório, jogos).</p>
+        <p><span class="highlight">Hardening:</span></p>
+        <ul>
+            <li>Desativar NetBIOS, SMBv1, RDP, UPnP, Telemetria (script PowerShell: Sophos Hardening Kit).</li>
+            <li>Firewall: bloquear entrada, permitir apenas conexões explícitas.</li>
+            <li>AppLocker: restringir executáveis não autorizados.</li>
+            <li>UAC: nível máximo.</li>
+            <li>Atualizações: instalação manual após revisão.</li>
+        </ul>
+        <p><span class="highlight">Ferramentas:</span></p>
+        <ul>
+            <li><strong>Veracrypt:</strong> volumes ocultos, desmontagem após 5min.</li>
+            <li><strong>VirtualBox:</strong> VMs isoladas (sem clipboard, rede restrita) para navegação de risco ou jogos.</li>
+            <li><strong>Navegador:</strong> TOR (preferencial) e Firefox com uBlock Origin, HTTPS Everywhere, ClearURLs. Cache/cookies limpos ao fechar.</li>
+            <li><strong>DNS:</strong> NextDNS para bloqueio de domínios maliciosos.</li>
+            <li><strong>VPN:</strong> Mullvad, configurada no roteador (OpenWrt, VLANs).</li>
+        </ul>
+        <p><span class="highlight">Práticas:</span></p>
+        <ul>
+            <li>Usuário padrão para uso diário.</li>
+            <li>Jogos em VM ou conta separada com privilégios limitados.</li>
+        </ul>
+
+        <h2 id="section4">4. Sistema Offline: Tails + exFAT</h2>
+        <p><span class="highlight">Missão:</span> Operações sensíveis com anonimato total.</p>
+        <p><span class="highlight">Setup:</span></p>
+        <ul>
+            <li><strong>SSD2:</strong>
+                <ul>
+                    <li>Partição 1: Tails (persistência criptografada, ISO verificado via GPG).</li>
+                    <li>Partição 2: exFAT (cross-platform, somente leitura no sistema online).</li>
+                </ul>
+            </li>
+            <li><strong>Tails:</strong>
+                <ul>
+                    <li>Inicialização offline para operações sem rede.</li>
+                    <li>Tor com pontes em redes monitoradas.</li>
+                    <li>Ferramentas: Proton Pass, Veracrypt.</li>
+                </ul>
+            </li>
+            <li><strong>Hardware:</strong>
+                <ul>
+                    <li>SSD online desconectado durante uso offline.</li>
+                    <li>Computador dedicado (opcional, se viável).</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2 id="section5">5. Criptografia: Veracrypt</h2>
+        <p><span class="highlight">Volume Seguro:</span></p>
+        <ul>
+            <li>Local: Partição exFAT do SSD offline.</li>
+            <li>Tipo: Volume oculto, cross-platform.</li>
+            <li>Algoritmo: AES(Twofish), senha de 40 caracteres (Proton Pass), PIM [1000 ~ 10000].</li>
+            <li>Keyfile: Pendrive acessório.</li>
+        </ul>
+        <p><span class="highlight">Práticas:</span></p>
+        <ul>
+            <li>Backup do cabeçalho em pendrive separado.</li>
+            <li>Teste de restauração trimestral.</li>
+            <li>Senha exclusiva no Proton Pass.</li>
+        </ul>
+
+        <h2 id="section6">6. Gerenciamento de Senhas: Proton Pass</h2>
+        <p><span class="highlight">Setup:</span></p>
+        <ul>
+            <li>Conta criada via Tails/Tor, sem dados pessoais.</li>
+            <li>Senha mestra: 20+ caracteres, única.</li>
+            <li>2FA: TOTP via Proton Pass.</li>
+        </ul>
+        <p><span class="highlight">Uso:</span></p>
+        <ul>
+            <li>Acesso exclusivo via Tor Browser no Tails.</li>
+            <li>Senhas aleatórias (20+ caracteres) para todos os serviços.</li>
+            <li>Backup do cofre: exportado, criptografado, em dois pendrives.</li>
+        </ul>
+
+        <h2 id="section7">7. Troca de Senhas e 2FA</h2>
+        <p><span class="highlight">Checklist:</span></p>
+        <ul>
+            <li>Bancos, e-mails (Google, Microsoft), redes sociais (Instagram, Facebook), streamings (Netflix, Spotify), PayPal, Amazon.</li>
+            <li>Senhas: 20+ caracteres, Proton Pass.</li>
+            <li>2FA: TOTP via Proton Pass (evitar SMS).</li>
+        </ul>
+        <p><span class="highlight">Protocolo:</span></p>
+        <ul>
+            <li>Troca via Tails/Tor.</li>
+            <li>Respostas de segurança aleatórias (Proton Pass).</li>
+            <li>Rotação anual de senhas.</li>
+            <li>Monitoramento: Have I Been Pwned, alertas de login.</li>
+        </ul>
+
+        <h2 id="section8">8. Antivírus: Escudo Multicamadas</h2>
+        <p><span class="highlight">Arsenal:</span></p>
+        <ul>
+            <li><strong>Windows Defender:</strong> Proteção em tempo real, varreduras diárias.</li>
+            <li><strong>Bitdefender Free:</strong> Defesa contra ameaças avançadas.</li>
+            <li><strong>Malwarebytes:</strong> Remoção de adware/spyware, varreduras semanais.</li>
+            <li><strong>Emsisoft Anti-Malware:</strong> Varreduras sob demanda, foco em ransomware.</li>
+            <li><strong>ESET e Kaspersky:</strong> Varredura sob demanda, foco em rootkit</li>
+            <li><strong>CCleaner:</strong> Limpeza de temporários e rastros.</li>
+        </ul>
+        <p><span class="highlight">Práticas:</span></p>
+        <ul>
+            <li>Varreduras cruzadas para evitar falsos negativos.</li>
+            <li>Atualizações automáticas.</li>
+            <li>Isolamento: VMs para arquivos suspeitos.</li>
+        </ul>
+        <p class="jaba">Bitdefender é leve e letal; Emsisoft é um sniper contra ransomware; Malwarebytes e CCleaner são essenciais para higiene digital.</p>
+
+        <h2 id="section9">9. Backup de Chaves</h2>
+        <p><span class="highlight">Itens:</span></p>
+        <ul>
+            <li><strong>Veracrypt:</strong> Cabeçalho (pendrive).</li>
+            <li><strong>Proton Pass:</strong> Cofre exportado (criptografado, dois pendrives).</li>
+            <li><strong>Google/Microsoft:</strong> Códigos de recuperação (papel, gaveta trancada).</li>
+            <li><strong>Firefox:</strong> Senhas exportadas via Proton Pass.</li>
+            <li><strong>Carteiras Digitais:</strong> Seed phrases (papel, dois locais).</li>
+        </ul>
+        <p><span class="highlight">Práticas:</span></p>
+        <ul>
+            <li>Verificar integridade (SHA256) dos backups.</li>
+            <li>Armazenar em gaveta trancada + casa de familiar confiável.</li>
+            <li>Teste de restauração semestral.</li>
+        </ul>
+
+        <h2 id="section10">10. Pendrive Multiboot: Ventoy</h2>
+        <p><span class="highlight">Setup:</span></p>
+        <ul>
+            <li>Pendrive (32GB+, SanDisk Extreme Pro) com Ventoy (exFAT, UEFI/BIOS).</li>
+            <li>ISOs:
+                <ul>
+                    <li><strong>Gandalf’s WinPE:</strong> Reparos em Windows.</li>
+                    <li><strong>Hiren’s BootCD:</strong> Recuperação e limpeza.</li>
+                    <li><strong>AntiX:</strong> Linux leve para operações externas.</li>
+                    <li><strong>Kali Linux:</strong> Auditorias de segurança (modo live).</li>
+                </ul>
+            </li>
+        </ul>
+        <p><span class="highlight">Práticas:</span></p>
+        <ul>
+            <li>Verificar ISOs (SHA256).</li>
+            <li>Atualizar Ventoy trimestralmente.</li>
+            <li>Testar boot em hardware alternativo.</li>
+        </ul>
+        <p class="jaba">Ventoy é o canivete suíço do multiboot, simples e indestrutível.</p>
+
+        <h2 id="section11">11. Backups e Restauração</h2>
+        <p><span class="highlight">Sistema Online:</span></p>
+        <ul>
+            <li>Ferramenta: Macrium Reflect Free & FreeFileSync.</li>
+            <li>Estratégia: Backups incrementais diários, criptografados, em pendrive.</li>
+            <li>Frequência: Diário (incremental), semanal (completo).</li>
+        </ul>
+        <p><span class="highlight">Sistema Offline:</span></p>
+        <ul>
+            <li>Cópias de volumes Veracrypt em dois pendrives.</li>
+            <li>Teste mensal.</li>
+        </ul>
+        <p class="jaba">Macrium Reflect é leve e confiável; BalenaEtcher grava ISOs com precisão de laser.</p>
+
+        <h2 id="section12">12. Segurança Física</h2>
+        <p><span class="highlight">Armazenamento:</span></p>
+        <ul>
+            <li>SSD offline e pendrives em gaveta com cadeado.</li>
+            <li>Documentação em papel (gaveta + casa de familiar).</li>
+        </ul>
+        <p><span class="highlight">Rede:</span></p>
+        <ul>
+            <li>Roteador com OpenWrt, VLANs.</li>
+            <li>Desativar Wi-Fi quando offline.</li>
+        </ul>
+        <p><span class="highlight">Proteção:</span></p>
+        <ul>
+            <li>Bloqueio de portas USB não utilizadas.</li>
+            <li>Senha de BIOS/UEFI.</li>
+            <li>UPS para quedas de energia.</li>
+        </ul>
+
+        <h2 id="section13">13. Monitoramento e Auditoria</h2>
+        <p><span class="highlight">Ferramentas:</span></p>
+        <ul>
+            <li>Graylog: Logs do sistema online.</li>
+            <li>OSQuery: Monitoramento em tempo real.</li>
+            <li>Chkrootkit: Integridade no Tails.</li>
+        </ul>
+        <p><span class="highlight">Práticas:</span></p>
+        <ul>
+            <li>Auditoria mensal (Proton, Veracrypt, VPN).</li>
+            <li>Simulação de comprometimento (ex.: phishing, perda de senha).</li>
+            <li>Monitoramento de contas via Have I Been Pwned.</li>
+        </ul>
+
+        <h2 id="section14">14. Treinamento OpSec</h2>
+        <p><span class="highlight">Cronograma:</span></p>
+        <ul>
+            <li>Trimestral: Praticar loop Tails, Windows, Ventoy.</li>
+            <li>Mensal: Exercícios de phishing (ex.: identificar e-mails falsos).</li>
+            <li>Anual: Revisar manifesto.</li>
+        </ul>
+        <p><span class="highlight">Práticas:</span></p>
+        <ul>
+            <li>Mentalidade de confiança zero.</li>
+            <li>Documentar procedimentos em papel.</li>
+            <li>Simular cenários de falha (ex.: pendrive corrompido).</li>
+        </ul>
+
+        <h2 id="section15">15. Ferramentas de Elite</h2>
+        <p><span class="highlight">Ferramentas:</span></p>
+        <ul>
+            <li><strong>Criptografia:</strong> Veracrypt & Proton Pass.</li>
+            <li><strong>Antivírus:</strong> Bitdefender Free, Malwarebytes, Emsisoft, CCleaner, Windows Defender, ESET & Kaspersky.</li>
+            <li><strong>Backup:</strong> FreeFileSync, Macrium Reflect & BalenaEtcher.</li>
+            <li><strong>Multiboot:</strong> Ventoy (Gandalf, Hiren’s, AntiX & Kali).</li>
+            <li><strong>Rede:</strong> Mullvad, NextDNS & OpenWrt.</li>
+            <li><strong>Anonimato:</strong> Tails & Tor Browser.</li>
+        </ul>
+
+        <h2 id="glossary">16. Glossário</h2>
+        <p><span class="highlight">Decodificando o Jargão:</span> Termos técnicos e ferramentas do manifesto explicados para fortalecer sua defesa digital.</p>
+        <dl>
+            <dt>2FA (Autenticação de Dois Fatores)</dt>
+            <dd>Camada extra de segurança que exige dois métodos de verificação (ex.: senha + código TOTP) para acessar contas.</dd>
+
+            <dt>AES-256</dt>
+            <dd>Criptografia de nível militar, praticamente inquebrável, usada para proteger dados sensíveis (ex.: em backups ou VeraCrypt).</dd>
+
+            <dt>AppLocker</dt>
+            <dd>Ferramenta do Windows para restringir quais programas podem ser executados, bloqueando malware ou software não autorizado.</dd>
+
+            <dt>BIOS/UEFI</dt>
+            <dd>Firmware que inicializa o hardware do computador. Proteger com senha evita alterações não autorizadas.</dd>
+
+            <dt>Chkrootkit</dt>
+            <dd>Ferramenta para verificar a presença de rootkits (malware que esconde atividades maliciosas) em sistemas Linux como Tails.</dd>
+
+            <dt>exFAT</dt>
+            <dd>Sistema de arquivos compatível com múltiplas plataformas (Windows, Linux, macOS), usado para partições de dados no manifesto.</dd>
+
+            <dt>Firewall</dt>
+            <dd>Barreira de rede que bloqueia conexões não autorizadas, essencial para proteger o sistema online.</dd>
+
+            <dt>GPG (GNU Privacy Guard)</dt>
+            <dd>Ferramenta de criptografia para verificar a autenticidade de arquivos (ex.: ISOs do Tails) usando assinaturas digitais.</dd>
+
+            <dt>Graylog</dt>
+            <dd>Plataforma de gerenciamento de logs para monitorar atividades no sistema online, detectando anomalias.</dd>
+
+            <dt>Hardening</dt>
+            <dd>Processo de reforçar a segurança de um sistema, desativando recursos desnecessários e aplicando configurações seguras.</dd>
+
+            <dt>Have I Been Pwned</dt>
+            <dd>Serviço que verifica se suas contas foram comprometidas em vazamentos de dados, útil para monitoramento.</dd>
+
+            <dt>ISO</dt>
+            <dd>Imagem de disco usada para instalar sistemas operacionais ou ferramentas (ex.: Tails, Kali Linux).</dd>
+
+            <dt>Keyfile</dt>
+            <dd>Arquivo usado junto com uma senha para desbloquear volumes criptografados (ex.: em VeraCrypt), aumentando a segurança.</dd>
+
+            <dt>NetBIOS/SMBv1</dt>
+            <dd>Protocolos de rede antigos e vulneráveis, desativados no Windows para evitar ataques.</dd>
+
+            <dt>NVMe</dt>
+            <dd>Tipo de SSD rápido, usado no manifesto. Requer sobrescrição segura (ex.: <code>nvme sanitize</code>) para descarte.</dd>
+
+            <dt>OpenWrt</dt>
+            <dd>Firmware de código aberto para roteadores, permitindo configurações avançadas como VLANs para maior segurança de rede.</dd>
+
+            <dt>OSQuery</dt>
+            <dd>Ferramenta de monitoramento em tempo real que coleta dados do sistema para auditorias de segurança.</dd>
+
+            <dt>PIM</dt>
+            <dd>Parâmetro em VeraCrypt que aumenta a complexidade da descriptografia, tornando ataques mais difíceis.</dd>
+
+            <dt>RDP (Remote Desktop Protocol)</dt>
+            <dd>Protocolo de acesso remoto do Windows, desativado no manifesto para evitar invasões.</dd>
+
+            <dt>Rootkit</dt>
+            <dd>Tipo de malware que se esconde profundamente no sistema, detectado por ferramentas como ESET ou Kaspersky.</dd>
+
+            <dt>SHA256</dt>
+            <dd>Algoritmo de hash usado para verificar a integridade de arquivos (ex.: ISOs ou backups), garantindo que não foram alterados.</dd>
+
+            <dt>Tails</dt>
+            <dd>Sistema operacional Linux focado em anonimato, rodando via USB ou SSD, que usa Tor por padrão.</dd>
+
+            <dt>Tor</dt>
+            <dd>Rede de anonimato que mascara sua localização e identidade, usada no manifesto para acessos sensíveis.</dd>
+
+            <dt>TOTP (Time-based One-Time Password)</dt>
+            <dd>Código temporário gerado por aplicativos (ex.: Proton Pass) para autenticação 2FA, mais seguro que SMS.</dd>
+
+            <dt>UAC (User Account Control)</dt>
+            <dd>Recurso do Windows que exige permissão para ações administrativas, configurado no nível máximo para segurança.</dd>
+
+            <dt>UPnP (Universal Plug and Play)</dt>
+            <dd>Protocolo de rede que facilita conexões automáticas, desativado no manifesto por ser vulnerável.</dd>
+
+            <dt>VLAN</dt>
+            <dd>Rede virtual separada dentro de um roteador (ex.: com OpenWrt), usada para isolar dispositivos e tráfego.</dd>
+
+            <dt>VM (Virtual Machine)</dt>
+            <dd>Sistema isolado dentro de outro (ex.: via VirtualBox), usado para testar arquivos ou rodar jogos sem riscos.</dd>
+
+            <dt>VPN (Virtual Private Network)</dt>
+            <dd>Rede privada que criptografa e mascara seu tráfego online, usada no manifesto com Mullvad.</dd>
+        </dl>
+
+        <h2 id="links">Links</h2>
+        <p><span class="highlight">Recursos Oficiais:</span> Acesse os sites oficiais dos programas e ferramentas mencionados para downloads seguros e documentação.</p>
+        <ul>
+            <li><a href="https://www.veracrypt.fr" target="_blank">VeraCrypt</a> - Criptografia de disco de código aberto.</li>
+            <li><a href="https://proton.me/pass" target="_blank">Proton Pass</a> - Gerenciador de senhas seguro.</li>
+            <li><a href="https://www.bitdefender.com/solutions/free.html" target="_blank">Bitdefender Free</a> - Antivírus leve e eficaz.</li>
+            <li><a href="https://www.malwarebytes.com" target="_blank">Malwarebytes</a> - Proteção contra adware e spyware.</li>
+            <li><a href="https://www.emsisoft.com" target="_blank">Emsisoft Anti-Malware</a> - Defesa contra ransomware.</li>
+            <li><a href="https://www.ccleaner.com" target="_blank">CCleaner</a> - Limpeza de arquivos temporários.</li>
+            <li><a href="https://www.microsoft.com/en-us/windows/windows-defender" target="_blank">Windows Defender</a> - Proteção nativa do Windows.</li>
+            <li><a href="https://www.eset.com" target="_blank">ESET</a> - Antivírus leve para varreduras sob demanda.</li>
+            <li><a href="https://www.kaspersky.com" target="_blank">Kaspersky</a> - Proteção contra rootkits.</li>
+            <li><a href="https://freefilesync.org" target="_blank">FreeFileSync</a> - Sincronização e backup de arquivos.</li>
+            <li><a href="https://www.macrium.com/reflectfree" target="_blank">Macrium Reflect Free</a> - Backup de sistema confiável.</li>
+            <li><a href="https://www.balena.io/etcher" target="_blank">BalenaEtcher</a> - Gravação de ISOs em mídia.</li>
+            <li><a href="https://ventoy.net" target="_blank">Ventoy</a> - Solução de multiboot.</li>
+            <li><a href="https://mullvad.net" target="_blank">Mullvad</a> - VPN focada em privacidade.</li>
+            <li><a href="https://nextdns.io" target="_blank">NextDNS</a> - DNS seguro e personalizável.</li>
+            <li><a href="https://openwrt.org" target="_blank">OpenWrt</a> - Firmware para roteadores.</li>
+            <li><a href="https://tails.net" target="_blank">Tails</a> - Sistema operacional para anonimato.</li>
+            <li><a href="https://www.torproject.org" target="_blank">Tor Browser</a> - Navegação anônima.</li>
+            <li><a href="https://www.virtualbox.org" target="_blank">VirtualBox</a> - Virtualização para sistemas isolados.</li>
+            <li><a href="https://www.mozilla.org/firefox" target="_blank">Firefox</a> - Navegador personalizável.</li>
+            <li><a href="https://www.ublockorigin.com" target="_blank">uBlock Origin</a> - Bloqueador de anúncios.</li>
+            <li><a href="https://www.eff.org/https-everywhere" target="_blank">HTTPS Everywhere</a> - Força conexões seguras.</li>
+            <li><a href="https://clearurls.webflow.io" target="_blank">ClearURLs</a> - Remove rastreadores de URLs.</li>
+            <li><a href="https://www.graylog.org" target="_blank">Graylog</a> - Gerenciamento de logs.</li>
+            <li><a href="https://osquery.io" target="_blank">OSQuery</a> - Monitoramento em tempo real.</li>
+            <li><a href="http://www.chkrootkit.org" target="_blank">Chkrootkit</a> - Verificação de integridade.</li>
+            <li><a href="https://haveibeenpwned.com" target="_blank">Have I Been Pwned</a> - Monitoramento de vazamentos.</li>
+            <li><a href="https://antixlinux.com" target="_blank">AntiX</a> - Linux leve para operações externas.</li>
+            <li><a href="https://www.kali.org" target="_blank">Kali Linux</a> - Distribuição para auditorias de segurança.</li>
+        </ul>
+
+        <h2 id="conclusion">Conclusão</h2>
+        <p>Esta fortaleza digital é sua linha de defesa contra o caos cibernético. Implemente com rigor, pratique com disciplina e atualize com paranoia. No ciberespaço, você é o guardião do seu perímetro. <span class="highlight">Lock it down, man!</span></p>
+        <div class="donation">
+            <p><span class="highlight">Gostou desse artigo?</span> Gostaria de fazer uma doação para apoiar a manutenção deste manifesto? Envie qualquer quantia para nosso endereço Bitcoin abaixo. Sua contribuição ajuda a manter a fortaleza digital viva!</p>
+            <p><strong>Endereço Bitcoin:</strong> <code>bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</code></p>
+        </div>
+
+        <footer>
+            <p>Manifesto OpSec v1.0 | Criado para a elite digital | 2025</p>
+        </footer>
+    </div>
+
+    <script>
+        // Toggle Sidebar em Mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+        // Scroll Suave
+        document.querySelectorAll('.sidebar a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+                if (window.innerWidth <= 768) {
+                    document.getElementById('sidebar').classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
